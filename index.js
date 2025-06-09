@@ -1,13 +1,18 @@
 import express from "express"
 import dotenv from 'dotenv'
 import cors from 'cors'
+import http from "http";
 import cookieParser from "cookie-parser";
 import mongoose from 'mongoose'
 import connectDB from "./Utils/Database.js";
 import authRoutes from "./Routes/authRoutes.js";
+import setupSocket from "./socket.js";
+
+const app = express();
+const server = http.createServer(app);
 
 dotenv.config();
-const app=express();
+
 app.use(cookieParser());
 app.use(express.json());
 
@@ -19,6 +24,9 @@ app.use(cors({
     credentials:true,
 }))
 
+
+setupSocket(server);
+
 app.use("/uploads/profiles",express.static("uploads/profiles"));
 
 const PORT=process.env.PORT || 5000;
@@ -29,7 +37,7 @@ app.get("/",(req,res)=>{
 
 
 
-app.listen(PORT,()=>{
+server.listen(PORT,()=>{
     connectDB();
     console.log("Server is Running on Port ",PORT)
 })
