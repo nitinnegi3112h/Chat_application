@@ -19,6 +19,8 @@ app.use(cors({
     credentials:true,
 }))
 
+app.use("/uploads/profiles",express.static("uploads/profiles"));
+
 const PORT=process.env.PORT || 5000;
 
 app.get("/",(req,res)=>{
