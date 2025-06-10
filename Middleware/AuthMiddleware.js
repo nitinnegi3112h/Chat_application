@@ -11,8 +11,7 @@ export const verifyToken=(req,res,next)=>
     });
   }
 
-  console.log(token)
-
+ 
    jwt.verify(token,process.env.JWT_KEY, ((err,payload)=>{
      
     if(err)
